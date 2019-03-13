@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { Product } from './product';
 
 /* Constants required before the @Injectable */
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-const apiUrl = '/api/v1/products';
+const apiUrl = 'http://localhost:9001/products/';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class ApiService {
   /* Get (List) Products Method */
   public getProducts(): Observable<Product[]> {
 
-    return this.http.get<Product[]>(apiUrl)
+    return this.http.get<Product[]>(apiUrl, httpOptions)
       .pipe(
         tap(_ => console.log('fetched products')),
         catchError(this.handleError('getProducts', []))

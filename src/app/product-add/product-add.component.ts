@@ -30,13 +30,13 @@ export class ProductAddComponent implements OnInit {
     this.productForm = this.formBuilder.group({
       prodName: [null, Validators.required],
       prodDesc: [null, Validators.required],
-      prodPrice: [null, Validators.required],
-      updatedAt: [null, Validators.required]
+      prodPrice: [null, Validators.required]
     });
   }
 
   onFormSubmit(form: Product) {
     this.isLoadingResults = true;
+    console.log('Form: ', form);
     this.api.addProduct(form)
       .subscribe(
         res => {
