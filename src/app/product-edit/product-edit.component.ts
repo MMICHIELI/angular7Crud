@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ApiService } from '../core/services/api.service';
+
 import {
   FormBuilder,
   FormGroup,
   Validators
 } from '@angular/forms';
+
 import { Product } from '../product';
+
+// Services
+import { ProductApiService } from '../product-api.service';
 
 @Component({
   selector: 'app-product-edit',
@@ -25,7 +29,7 @@ export class ProductEditComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private api: ApiService,
+    private productService: ProductApiService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -39,7 +43,7 @@ export class ProductEditComponent implements OnInit {
   }
 
   getProduct(id: number) {
-    this.api.getProduct(id).subscribe(data => {
+    this.productService.getProduct(id).subscribe(data => {
       this.id = data.id;
       this.productForm.setValue({
         prodName: data.prodName,
@@ -51,7 +55,7 @@ export class ProductEditComponent implements OnInit {
 
   onFormSubmit(form: Product) {
     this.isLoadingResults = true;
-    this.api.updateProduct(this.id, form)
+    this.productService.updateProduct(this.id, form)
       .subscribe(res => {
         const id = res.id;
         this.isLoadingResults = false;

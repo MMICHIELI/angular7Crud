@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../core/services/api.service';
+
 import { Product } from '../product';
+
+// Services
+import { ProductApiService } from '../product-api.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -16,7 +20,7 @@ export class ProductDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private api: ApiService,
+    private productService: ProductApiService,
     private router: Router
   ) { }
 
@@ -26,7 +30,7 @@ export class ProductDetailComponent implements OnInit {
 
   /* Function to get A Product by his id */
   getProductDetails(id: number) {
-    this.api.getProduct(id)
+    this.productService.getProduct(id)
       .subscribe(
         data => {
           this.product = data;
@@ -39,7 +43,7 @@ export class ProductDetailComponent implements OnInit {
   /* Function to delete A Product by his id */
   deleteProduct(id: number) {
     this.isLoadingResults = true;
-    this.api.deleteProduct(id)
+    this.productService.deleteProduct(id)
       .subscribe(
         res => {
           this.isLoadingResults = false;

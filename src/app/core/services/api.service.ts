@@ -3,84 +3,56 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Product } from '../../product';
+import { AppConfig } from '../models/app-config.model';
+import { ErrorModel } from '../models/error.model';
 
-/* Constants required before the @Injectable */
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
-const apiUrl = 'http://localhost:9001/products/';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  // Inject HttpClient
-  constructor(
-    private http: HttpClient
-  ) { }
+  public appConfig = AppConfig;
+
+  public header: HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
+
+
+  public getRootUrl(): string {
+    return this.appConfig.apiBaseURL;
+  }
 
   /* HandleError function */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+  public handleError<T>(operation = 'operation', response?: Response | any) {
 
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
+    const errorModel: ErrorModel = new ErrorModel();
 
-  /* Get (List) Products Method */
-  public getProducts(): Observable<Product[]> {
+    if (response instanceof Response) {
 
-    return this.http.get<Product[]>(apiUrl, httpOptions)
-      .pipe(
-        tap(_ => console.log('fetched products')),
-        catchError(this.handleError('getProducts', []))
-      );
-  }
+      // Handle Connection Refuse
+      if (response.status === 0 && response.ok === false) {
+        errorModel.status = -1;
+        errorModel.severity = errorModel.LEVEL_ERROR;
+        errorModel.statusText = 'net::ERR_CONNECTION_REFUSED';
+      } else {
 
-  /* Get Product By id */
-  getProduct(id: number): Observable<Product> {
-    const url = `${apiUrl}/${id}`;
+        // handle 404, 201 etc ... here
+        errorModel.status = response.status;
+        if (response.status === 404) {
+          errorModel.status = response.status;
+          errorModel.severity = errorModel.LEVEL_WARN;
+          errorModel.statusText = 'NOT FOUND';
+        }
+      }
+    } else {
 
-    return this.http.get<Product>(url)
-      .pipe(
-        tap(_ => console.log(`fetched product id=${id}`)),
-        catchError(this.handleError<Product>(`getProduct id=${id}`))
-      );
-  }
+      // we don't know what the Error is exactly
+      const errMsg = response.message ? response.message : response.toString();
+      errorModel.severity = errorModel.LEVEL_WARN;
+      errorModel.statusText = errMsg;
+    }
 
-  /* Add a Product */
-  addProduct(product: Product): Observable<Product> {
-
-    return this.http.post<Product>(apiUrl, product, httpOptions)
-      .pipe(
-        tap((result: Product) => console.log(`added product w/ id=${result.id}`)),
-        catchError(this.handleError<Product>('addProduct'))
-      );
-  }
-
-  /* Update an existing Product */
-  updateProduct(id: number, product: Product): Observable<any> {
-    const url = `${apiUrl}/${id}`;
-
-    return this.http.put(url, product, httpOptions)
-      .pipe(
-        tap(_ => console.log(`updated product id=${id}`)),
-        catchError(this.handleError<any>('updateProduct'))
-      );
-  }
-
-  /* Delete a Product */
-  deleteProduct(id: number): Observable<Product> {
-    const url = `${apiUrl}/${id}`;
-
-    return this.http.delete<Product>(url, httpOptions)
-      .pipe(
-        tap(_ => console.log(`deleted product id=${id}`)),
-        catchError(this.handleError<Product>('deleteProduct'))
-      );
+    return Observable.throw(errorModel);
   }
 }

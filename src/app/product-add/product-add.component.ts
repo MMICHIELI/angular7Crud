@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../core/services/api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../product';
+
+// Services
+import { ProductApiService } from '../product-api.service';
 
 @Component({
   selector: 'app-product-add',
@@ -21,7 +23,7 @@ export class ProductAddComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private api: ApiService,
+    private productService: ProductApiService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -37,7 +39,7 @@ export class ProductAddComponent implements OnInit {
   onFormSubmit(form: Product) {
     this.isLoadingResults = true;
     console.log('Form: ', form);
-    this.api.addProduct(form)
+    this.productService.addProduct(form)
       .subscribe(
         res => {
           const id = res.id;
