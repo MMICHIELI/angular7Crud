@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 // Model
-import { Product } from '../product';
+import { Product } from '../../models/product';
 
 // Services
-import { ProductApiService } from '../product-api.service';
+import { ProductApiService } from '../../product-api.service';
 
 @Component({
   selector: 'app-products',

@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Product Components
-import { ProductsComponent } from './products/products.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { ProductAddComponent } from './product-add/product-add.component';
-import { ProductEditComponent } from './product-edit/product-edit.component';
+import { ProductsComponent } from './product/components/products/products.component';
+import { ProductDetailComponent } from './product/components/product-detail/product-detail.component';
+import { ProductAddComponent } from './product/components/product-add/product-add.component';
+import { ProductEditComponent } from './product/components/product-edit/product-edit.component';
 
 const routes: Routes = [
   {

@@ -7,10 +7,12 @@ import {
   Validators
 } from '@angular/forms';
 
-import { Product } from '../product';
+// Models
+import { Product } from '../../models/product';
 
 // Services
-import { ProductApiService } from '../product-api.service';
+import { ProductApiService } from '../../product-api.service';
+
 
 @Component({
   selector: 'app-product-edit',

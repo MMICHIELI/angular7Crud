@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../core/services/api.service';
 
-import { Product } from '../product';
+// Models
+import { Product } from '../../models/product';
 
 // Services
-import { ProductApiService } from '../product-api.service';
+import { ProductApiService } from '../../product-api.service';
 
 @Component({
   selector: 'app-product-detail',

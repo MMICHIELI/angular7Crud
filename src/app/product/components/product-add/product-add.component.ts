@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Product } from '../product';
+
+// Model
+import { Product } from 'src/app/product/models/product';
 
 // Services
-import { ProductApiService } from '../product-api.service';
+import { ProductApiService } from '../../product-api.service';
 
 @Component({
   selector: 'app-product-add',
