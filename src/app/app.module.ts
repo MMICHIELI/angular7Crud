@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Application Modules
 import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
+import { StateManagementModule } from './state-management.module';
 
 // Root Component
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    StateManagementModule,
     CoreModule
   ],
   providers: [],
