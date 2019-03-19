@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product';
 
 // Services
-import { ProductApiService } from '../../product-api.service';
+import { ProductApiService } from '../../services/product-api.service';
 
 @Component({
   selector: 'app-product-detail',

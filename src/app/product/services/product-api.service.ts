@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
 import { retry, catchError, map } from 'rxjs/operators';
 
 // Models
-import { Product } from './models/product';
+import { Product } from '../models/product';
 
 // Services
-import { ApiService } from '../core/services/api.service';
+import { ApiService } from '../../core/services/api.service';
 
 @Injectable({
     providedIn: 'root'

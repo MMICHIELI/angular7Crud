@@ -2,7 +2,8 @@
 import { NgModule } from '@angular/core';
 
 // Application Modules
-import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from '../core/core.module';
+import { ProductRoutingModule } from './product-routing.module';
 
 // Components
 import { ProductsComponent } from './components/products/products.component';
@@ -10,18 +11,25 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
 import { ProductAddComponent } from './components/product-add/product-add.component';
 import { ProductEditComponent } from './components/product-edit/product-edit.component';
 
+
 @NgModule({
     imports: [
-        SharedModule
+        CoreModule,
+        ProductRoutingModule
     ],
     declarations: [
+        // Components
         ProductsComponent,
         ProductDetailComponent,
         ProductAddComponent,
         ProductEditComponent
     ],
     exports: [
-        SharedModule
+        // Components
+        ProductsComponent,
+        ProductDetailComponent,
+        ProductAddComponent,
+        ProductEditComponent
     ]
 })
 

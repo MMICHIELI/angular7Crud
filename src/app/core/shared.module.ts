@@ -1,9 +1,9 @@
 // Angular Modules
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Material Design
 import {
@@ -17,7 +17,6 @@ import {
     MatCardModule,
     MatFormFieldModule
 } from '@angular/material';
-import { AppRoutingModule } from '../app-routing.module';
 
 /**
  * Module Shared by all others
@@ -26,13 +25,11 @@ import { AppRoutingModule } from '../app-routing.module';
     declarations: [],
     imports: [
         // Angular's Modules
-        BrowserModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        BrowserAnimationsModule,
-        AppRoutingModule,
-        // Todo => Common Module
+        RouterModule,
+        CommonModule,
         // Material
         MatInputModule,
         MatTableModule,
@@ -46,12 +43,11 @@ import { AppRoutingModule } from '../app-routing.module';
     ],
     exports: [
         // Modules to export
-        BrowserModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        BrowserAnimationsModule,
-        AppRoutingModule,
+        RouterModule,
+        CommonModule,
         // Material
         MatInputModule,
         MatTableModule,

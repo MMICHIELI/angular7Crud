@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 
 // Application Modules
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from './shared.module';
 
 @NgModule({
     imports: [
