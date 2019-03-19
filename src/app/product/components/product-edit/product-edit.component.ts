@@ -61,7 +61,7 @@ export class ProductEditComponent implements OnInit {
       .subscribe(res => {
         const id = res.id;
         this.isLoadingResults = false;
-        this.router.navigate(['/product-details', id]);
+        this.router.navigate(['products/product-details', id]);
       }, (err) => {
         console.log(err);
         this.isLoadingResults = false;
@@ -70,6 +70,6 @@ export class ProductEditComponent implements OnInit {
   }
 
   productDetails() {
-    this.router.navigate(['/product-details', this.id]);
+    this.router.navigate(['products/product-details', this.id]);
   }
 }

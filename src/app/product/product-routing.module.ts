@@ -14,9 +14,12 @@ import { ProductEditComponent } from './components/product-edit/product-edit.com
 const productRoutes: Routes = [
     {
         path: '',
-        component: ProductsComponent,
-        data: { title: 'List of Products' },
         children: [
+            {
+                path: '',
+                component: ProductsComponent,
+                data: { title: 'List of Products' }
+            },
             {
                 path: 'product-details/:id',
                 component: ProductDetailComponent,
