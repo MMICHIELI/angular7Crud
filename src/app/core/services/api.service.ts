@@ -27,7 +27,7 @@ export class ApiService {
   }
 
   /* HandleError function */
-  public handleError<T>(operation = 'operation', response?: Response | any) {
+  public handleError<T>(response?: Response | any) {
 
     const errorModel: ErrorModel = new ErrorModel();
 

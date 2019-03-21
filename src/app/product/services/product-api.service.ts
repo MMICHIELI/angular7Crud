@@ -17,7 +17,7 @@ import { ApiService } from '../../core/services/api.service';
 })
 export class ProductApiService extends ApiService {
 
-    public apiProduct = `${this.appConfig.apiBaseURL}/products/`;
+    public apiProduct = `${this.appConfig.apiBaseURL}/products`;
 
     // Inject HttpClient
     constructor(
@@ -53,9 +53,9 @@ export class ProductApiService extends ApiService {
 
     /* Update an existing Product */
     updateProduct(id: number, product: Product): Observable<Product> {
-        const url = `${this.apiProduct}/${id}`;
+        const url = `${this.apiProduct}`;
 
-        return this.http.put(url, product)
+        return this.http.put<Product>(url, product)
             .pipe(map((response: Product) => response))
             .pipe(retry(this.appConfig.retryCount), catchError(this.handleError));
     }

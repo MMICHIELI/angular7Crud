@@ -23,7 +23,7 @@
       </dl>
     </mat-card-content>
     <mat-card-actions>
-      <a mat-flat-button color="primary" [routerLink]="['/products/product-edit', product.id]">
+      <a mat-flat-button color="primary" (click)="editProduct(product.id)">
         <mat-icon>edit</mat-icon>
       </a>
       <a mat-flat-button color="warn" (click)="deleteProduct(product.id)">

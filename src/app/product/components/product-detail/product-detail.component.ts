@@ -40,6 +40,11 @@ export class ProductDetailComponent implements OnInit {
       );
   }
 
+  /* Function to navigate */
+  editProduct(id: number) {
+    this.router.navigate(['/products/product-edit', id]);
+  }
+
   /* Function to delete A Product by his id */
   deleteProduct(id: number) {
     this.isLoadingResults = true;
