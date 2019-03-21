@@ -57,6 +57,7 @@ export class ProductEditComponent implements OnInit {
 
   onFormSubmit(form: Product) {
     this.isLoadingResults = true;
+    form.id = this.id;
     this.productService.updateProduct(this.id, form)
       .subscribe(res => {
         const id = res.id;

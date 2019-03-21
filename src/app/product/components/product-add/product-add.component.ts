@@ -46,7 +46,7 @@ export class ProductAddComponent implements OnInit {
         res => {
           const id = res.id;
           this.isLoadingResults = false;
-          this.router.navigate(['/product-details', id]);
+          this.router.navigate(['products/product-details', id]);
         },
         err => {
           console.log(err);
