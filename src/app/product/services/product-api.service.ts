@@ -49,9 +49,6 @@ export class ProductApiService extends ApiService {
     /* Add a Product */
     addProduct(product: Product): Observable<Product> {
 
-        console.log(`Product (add): { id: ${product.id},
-         name: ${product.prodName}, desc: ${product.prodDesc}, price: ${product.prodPrice} } .`);
-
         return this.http.post<IGenericResponse<Product>>(this.apiProduct, product)
             .pipe(map((response: IGenericResponse<Product>) => response.data))
             .pipe(retry(this.appConfig.retryCount), catchError(this.handleError));
@@ -60,8 +57,6 @@ export class ProductApiService extends ApiService {
     /* Update an existing Product */
     updateProduct(id: number, product: Product): Observable<Product> {
         const url = `${this.apiProduct}/${id}`;
-
-        console.log(`Product: { id: ${product.id}, name: ${product.prodName}, desc: ${product.prodDesc}, price: ${product.prodPrice} } .`);
 
         return this.http.put<IGenericResponse<Product>>(url, product)
             .pipe(map((response: IGenericResponse<Product>) => response.data))

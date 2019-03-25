@@ -40,7 +40,7 @@ export class ProductAddComponent implements OnInit {
 
   onFormSubmit(form: Product) {
     this.isLoadingResults = true;
-    console.log('Form: ', form);
+    form.id = null;
     this.productService.addProduct(form)
       .subscribe(
         res => {

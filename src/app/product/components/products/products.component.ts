@@ -24,7 +24,6 @@ export class ProductsComponent implements OnInit {
       .subscribe(
         res => {
           this.data = res.content;
-          console.log(this.data);
           this.isLoadingResults = false;
         },
         err => {
