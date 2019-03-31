@@ -1,5 +1,5 @@
 // Ngrx
-import { Action } from '@ngrx/store/src/models';
+import { Action } from '@ngrx/store';
 
 // Models
 import * as models from '../../models';
