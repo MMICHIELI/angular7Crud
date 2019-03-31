@@ -19,3 +19,8 @@ export interface IProductState {
     data?: IPage<Product>;
     error?: ErrorModel;
 }
+
+// Module State
+export interface IProductModuleState {
+    products: IProductState;
+}

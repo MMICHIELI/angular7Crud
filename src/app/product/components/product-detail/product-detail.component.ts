@@ -34,7 +34,6 @@ export class ProductDetailComponent implements OnInit {
       .subscribe(
         data => {
           this.product = data;
-          console.log(this.product);
           this.isLoadingResults = false;
         }
       );
