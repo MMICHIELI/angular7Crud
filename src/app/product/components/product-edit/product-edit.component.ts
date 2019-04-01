@@ -17,7 +17,7 @@ import { IAppState } from 'src/app/core/models';
 
 // Stores
 import * as fromStore from '../../store';
-import { ProductGetByIDSuccess, ProductActionTypes } from '../../store';
+import { ProductGetByIDSuccess, ProductActionTypes, ProductAddSuccess } from '../../store';
 
 // Action Types
 
@@ -72,16 +72,16 @@ export class ProductEditComponent implements OnInit {
   onFormSubmit(form: Product) {
     this.isLoadingResults = true;
     form.id = this.id;
-    // this.productService.updateProduct(this.id, form)
-    //   .subscribe(res => {
-    //     const id = res.id;
-    //     this.isLoadingResults = false;
-    //     this.router.navigate(['products/product-details', id]);
-    //   }, (err) => {
-    //     console.log(err);
-    //     this.isLoadingResults = false;
-    //   }
-    //   );
+    this.store.dispatch(new fromStore.ProductUpdate(form));
+    this.action$
+      .pipe(ofType<ProductAddSuccess>(ProductActionTypes.PRODUCT_ADD_SUCCESS))
+      .subscribe(
+        data => {
+          const id = data.payload.id;
+          this.isLoadingResults = false;
+          this.router.navigate(['products/product-details', id]);
+        }
+      );
   }
 
   productDetails() {

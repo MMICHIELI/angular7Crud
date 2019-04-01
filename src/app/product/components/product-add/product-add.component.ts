@@ -2,11 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+// @Ngrx
+import { Store } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
+
 // Model
 import { Product } from 'src/app/product/models/product';
+import { IAppState } from 'src/app/core/models';
 
-// Services
-import { ProductApiService } from '../../services/product-api.service';
+// Stores
+import * as fromStore from '../../store';
+import { ProductAddSuccess, ProductActionTypes } from '../../store';
 
 @Component({
   selector: 'app-product-add',
@@ -25,8 +31,9 @@ export class ProductAddComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private productService: ProductApiService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private store: Store<IAppState>,
+    private action$: Actions
   ) { }
 
   ngOnInit() {
@@ -41,16 +48,14 @@ export class ProductAddComponent implements OnInit {
   onFormSubmit(form: Product) {
     this.isLoadingResults = true;
     form.id = null;
-    this.productService.addProduct(form)
+    this.store.dispatch(new fromStore.ProductAdd(form));
+    this.action$
+      .pipe(ofType<ProductAddSuccess>(ProductActionTypes.PRODUCT_ADD_SUCCESS))
       .subscribe(
-        res => {
-          const id = res.id;
+        data => {
+          const id = data.payload.id;
           this.isLoadingResults = false;
           this.router.navigate(['products/product-details', id]);
-        },
-        err => {
-          console.log(err);
-          this.isLoadingResults = false;
         }
       );
   }

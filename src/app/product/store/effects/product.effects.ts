@@ -26,7 +26,8 @@ import {
     ProductAddError,
     ProductDelete,
     ProductGetByID,
-    ProductGetByIDSuccess
+    ProductGetByIDSuccess,
+    ProductUpdate
 } from '../actions';
 import { productPageRequestSelector } from '../reducers';
 
@@ -66,6 +67,17 @@ export class ProductEffects {
         .pipe(
             ofType<ProductAdd>(ProductActionTypes.PRODUCT_ADD),
             switchMap(action => this.productService.addProduct(action.payload)
+                .pipe(
+                    map(product => new ProductAddSuccess(product)),
+                    catchError(error => of(new ProductAddError(error)))
+                ))
+        );
+
+    @Effect()
+    updateProduct$: Observable<Action> = this.actions$
+        .pipe(
+            ofType<ProductUpdate>(ProductActionTypes.PRODUCT_UPDATE),
+            switchMap(action => this.productService.updateProduct(action.payload.id, action.payload)
                 .pipe(
                     map(product => new ProductAddSuccess(product)),
                     catchError(error => of(new ProductAddError(error)))

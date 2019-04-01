@@ -18,6 +18,7 @@ export enum ProductActionTypes {
     PRODUCT_ADD = '[PRODUCT] Product Add',
     PRODUCT_ADD_SUCCESS = '[PRODUCT] Product Add Success',
     PRODUCT_ADD_ERROR = '[PRODUCT] Product Add Error',
+    PRODUCT_UPDATE = '[PRODUCT] Product Add',
     PRODUCT_DELETE = '[PRODUCT] Product Delete',
     PRODUCT_DELETE_ERROR = '[PRODUCT] Product Delete Error'
 }
@@ -54,10 +55,15 @@ export class ProductGetByIDError implements Action {
     constructor(public payload: ErrorModel) { }
 }
 
-/* ==================== ADD ================================================ */
+/* ==================== ADD / UPDATE ================================================ */
 
 export class ProductAdd implements Action {
     readonly type = ProductActionTypes.PRODUCT_ADD;
+    constructor(public payload: models.Product) { }
+}
+
+export class ProductUpdate implements Action {
+    readonly type = ProductActionTypes.PRODUCT_UPDATE;
     constructor(public payload: models.Product) { }
 }
 
