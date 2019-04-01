@@ -12,6 +12,8 @@ import { IAppState } from 'src/app/core/models';
 
 // Stores
 import * as fromStore from '../../store';
+
+// Action Types
 import { ProductAddSuccess, ProductActionTypes } from '../../store';
 
 @Component({

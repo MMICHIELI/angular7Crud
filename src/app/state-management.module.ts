@@ -20,10 +20,10 @@ export function logger(reducer: ActionReducer<any>): any {
 }
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
-    return localStorageSync({ keys: ['core'], rehydrate: true })(reducer);
+    return localStorageSync({ keys: ['core', 'product'], rehydrate: true })(reducer);
 }
 
-export const metaReducers = environment.production ? [localStorageSyncReducer] : [localStorageSyncReducer, logger, storeFreeze];
+export const metaReducers = !environment.production ? [localStorageSyncReducer] : [localStorageSyncReducer, logger, storeFreeze];
 /**
  * Root Module for Ngrx
  */
