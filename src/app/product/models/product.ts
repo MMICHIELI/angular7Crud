@@ -14,11 +14,14 @@ export class Product {
 
 export interface IProductState {
     pageRequest?: IPageRequest;
+    byId?: number;
     loading?: boolean;
     success?: boolean;
     data?: IPage<Product>;
+    product?: Product;
     error?: ErrorModel;
 }
+
 
 // Module State
 export interface IProductModuleState {

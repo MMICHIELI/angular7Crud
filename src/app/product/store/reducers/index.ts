@@ -6,6 +6,7 @@ import { IProductModuleState } from '../../models';
 
 // Reducers
 import { ProductReducer } from './product.reducer';
+import { IPage } from 'src/app/core/models';
 
 export const reducers: ActionReducerMap<IProductModuleState> = {
     products: ProductReducer

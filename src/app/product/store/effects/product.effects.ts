@@ -24,7 +24,9 @@ import {
     ProductAdd,
     ProductAddSuccess,
     ProductAddError,
-    ProductDelete
+    ProductDelete,
+    ProductGetByID,
+    ProductGetByIDSuccess
 } from '../actions';
 import { productPageRequestSelector } from '../reducers';
 
@@ -44,6 +46,17 @@ export class ProductEffects {
             switchMap(action => this.productService.getProducts(action.payload)
                 .pipe(
                     map(page => new ProductPageLoadSuccess(page)),
+                    catchError(error => of(new ProductPageLoadError(error)))
+                ))
+        );
+
+    @Effect()
+    getProduct$: Observable<Action> = this.actions$
+        .pipe(
+            ofType<ProductGetByID>(ProductActionTypes.PRODUCT_GET_BY_ID),
+            switchMap(action => this.productService.getProduct(action.payload)
+                .pipe(
+                    map(product => new ProductGetByIDSuccess(product)),
                     catchError(error => of(new ProductPageLoadError(error)))
                 ))
         );
@@ -79,7 +92,7 @@ export class ProductEffects {
     deleteProduct$: Observable<Action> = this.actions$
         .pipe(
             ofType<ProductDelete>(ProductActionTypes.PRODUCT_DELETE),
-            switchMap(action => this.productService.deleteProduct(action.payload.id)
+            switchMap(action => this.productService.deleteProduct(action.payload)
                 .pipe(
                     withLatestFrom(this.store$.select(productPageRequestSelector)),
                     map(([[], pageRequest]) => {

@@ -1,11 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+// @ngrx
+import { Store } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
+
 // Models
 import { Product } from '../../models/product';
+import { IAppState } from 'src/app/core/models';
 
-// Services
-import { ProductApiService } from '../../services/product-api.service';
+// Stores
+import * as fromStore from '../../store';
+
+// Action Types
+import {
+  ProductGetByIDSuccess,
+  ProductActionTypes,
+  ProductDelete
+} from '../../store';
+
 
 @Component({
   selector: 'app-product-detail',
@@ -20,8 +33,9 @@ export class ProductDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductApiService,
-    private router: Router
+    private router: Router,
+    private store: Store<IAppState>,
+    private action$: Actions
   ) { }
 
   ngOnInit() {
@@ -30,13 +44,18 @@ export class ProductDetailComponent implements OnInit {
 
   /* Function to get A Product by his id */
   getProductDetails(id: number) {
-    this.productService.getProduct(id)
+    // Dispatching the action
+    this.store.dispatch(new fromStore.ProductGetByID(id));
+    // Listening to the action
+    this.action$
+      .pipe(ofType<ProductGetByIDSuccess>(ProductActionTypes.PRODUCT_GET_SUCCESS))
       .subscribe(
         data => {
-          this.product = data;
+          this.product = data.payload;
           this.isLoadingResults = false;
         }
       );
+
   }
 
   /* Function to navigate */
@@ -47,15 +66,13 @@ export class ProductDetailComponent implements OnInit {
   /* Function to delete A Product by his id */
   deleteProduct(id: number) {
     this.isLoadingResults = true;
-    this.productService.deleteProduct(id)
+    this.store.dispatch(new fromStore.ProductDelete(id))
+    this.action$
+      .pipe(ofType<ProductDelete>(ProductActionTypes.PRODUCT_DELETE))
       .subscribe(
         res => {
           this.isLoadingResults = false;
           this.router.navigate(['/products']);
-        },
-        err => {
-          console.log(err);
-          this.isLoadingResults = false;
         }
       );
   }

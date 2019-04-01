@@ -7,12 +7,19 @@ import {
   Validators
 } from '@angular/forms';
 
+// @Ngrx
+import { Store } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
+
 // Models
 import { Product } from '../../models/product';
+import { IAppState } from 'src/app/core/models';
 
-// Services
-import { ProductApiService } from '../../services/product-api.service';
+// Stores
+import * as fromStore from '../../store';
+import { ProductGetByIDSuccess, ProductActionTypes } from '../../store';
 
+// Action Types
 
 @Component({
   selector: 'app-product-edit',
@@ -31,8 +38,9 @@ export class ProductEditComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private productService: ProductApiService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private store: Store<IAppState>,
+    private action$: Actions
   ) { }
 
   ngOnInit() {
@@ -45,29 +53,35 @@ export class ProductEditComponent implements OnInit {
   }
 
   getProduct(id: number) {
-    this.productService.getProduct(id).subscribe(data => {
-      this.id = data.id;
-      this.productForm.setValue({
-        prodName: data.prodName,
-        prodDesc: data.prodDesc,
-        prodPrice: data.prodPrice
-      });
-    });
+    // Should be change and not systematically get the product from BackEND
+    this.store.dispatch(new fromStore.ProductGetByID(id));
+    this.action$
+      .pipe(ofType<ProductGetByIDSuccess>(ProductActionTypes.PRODUCT_GET_SUCCESS))
+      .subscribe(
+        data => {
+          this.id = data.payload.id;
+          this.productForm.setValue({
+            prodName: data.payload.prodName,
+            prodDesc: data.payload.prodDesc,
+            prodPrice: data.payload.prodPrice
+          });
+        }
+      );
   }
 
   onFormSubmit(form: Product) {
     this.isLoadingResults = true;
     form.id = this.id;
-    this.productService.updateProduct(this.id, form)
-      .subscribe(res => {
-        const id = res.id;
-        this.isLoadingResults = false;
-        this.router.navigate(['products/product-details', id]);
-      }, (err) => {
-        console.log(err);
-        this.isLoadingResults = false;
-      }
-      );
+    // this.productService.updateProduct(this.id, form)
+    //   .subscribe(res => {
+    //     const id = res.id;
+    //     this.isLoadingResults = false;
+    //     this.router.navigate(['products/product-details', id]);
+    //   }, (err) => {
+    //     console.log(err);
+    //     this.isLoadingResults = false;
+    //   }
+    //   );
   }
 
   productDetails() {

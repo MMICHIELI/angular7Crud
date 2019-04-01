@@ -5,7 +5,9 @@ import { ProductActions, ProductActionTypes } from '../actions';
 import * as models from '../../models';
 import { SortDirection, IPage, IPageRequest } from '../../../core/models';
 
-const newState = (state: models.IProductState, newData: models.IProductState): models.IProductState => {
+const newState = (
+    state: models.IProductState, newData: models.IProductState
+): models.IProductState => {
     return { ...state, ...newData };
 };
 
@@ -44,6 +46,30 @@ export function ProductReducer(
         case ProductActionTypes.PRODUCT_LOAD_PAGE_ERROR: {
             const newData: models.IProductState = {
                 data: null,
+                loading: false,
+                success: true,
+                error: action.payload
+            };
+            return newState(state, newData);
+        }
+        case ProductActionTypes.PRODUCT_GET_BY_ID: {
+            const newData: models.IProductState = {
+                byId: action.payload,
+                loading: true
+            };
+            return newState(state, newData);
+        }
+        case ProductActionTypes.PRODUCT_GET_SUCCESS: {
+            const newData: models.IProductState = {
+                product: action.payload as models.Product,
+                loading: false,
+                success: true
+            };
+            return newState(state, newData);
+        }
+        case ProductActionTypes.PRODUCT_GET_ERROR: {
+            const newData: models.IProductState = {
+                product: null,
                 loading: false,
                 success: true,
                 error: action.payload

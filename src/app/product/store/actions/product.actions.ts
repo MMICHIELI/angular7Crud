@@ -12,6 +12,9 @@ export enum ProductActionTypes {
     PRODUCT_LOAD_PAGE = '[PRODUCT] Product Load Page',
     PRODUCT_LOAD_PAGE_SUCCESS = '[PRODUCT] Product Load Page Success',
     PRODUCT_LOAD_PAGE_ERROR = '[PRODUCT] Product Load Page Error',
+    PRODUCT_GET_BY_ID = '[PRODUCT] Product Get By Id',
+    PRODUCT_GET_SUCCESS = '[PRODUCT] Product Get By Id Success',
+    PRODUCT_GET_ERROR = '[PRODUCT] Product Get By Id Error',
     PRODUCT_ADD = '[PRODUCT] Product Add',
     PRODUCT_ADD_SUCCESS = '[PRODUCT] Product Add Success',
     PRODUCT_ADD_ERROR = '[PRODUCT] Product Add Error',
@@ -31,6 +34,23 @@ export class ProductPageLoadSuccess implements Action {
 
 export class ProductPageLoadError implements Action {
     readonly type = ProductActionTypes.PRODUCT_LOAD_PAGE_ERROR;
+    constructor(public payload: ErrorModel) { }
+}
+
+/* ==================== GET by id ================================================ */
+
+export class ProductGetByID implements Action {
+    readonly type = ProductActionTypes.PRODUCT_GET_BY_ID;
+    constructor(public payload: number) { }
+}
+
+export class ProductGetByIDSuccess implements Action {
+    readonly type = ProductActionTypes.PRODUCT_GET_SUCCESS;
+    constructor(public payload: models.Product) { }
+}
+
+export class ProductGetByIDError implements Action {
+    readonly type = ProductActionTypes.PRODUCT_GET_ERROR;
     constructor(public payload: ErrorModel) { }
 }
 
@@ -55,7 +75,7 @@ export class ProductAddError implements Action {
 
 export class ProductDelete implements Action {
     readonly type = ProductActionTypes.PRODUCT_DELETE;
-    constructor(public payload: models.Product) { }
+    constructor(public payload: number) { }
 }
 
 export class ProductDeleteError implements Action {
@@ -68,6 +88,9 @@ export type ProductActions =
     ProductPageLoad
     | ProductPageLoadSuccess
     | ProductPageLoadError
+    | ProductGetByID
+    | ProductGetByIDSuccess
+    | ProductGetByIDError
     | ProductAdd
     | ProductAddSuccess
     | ProductAddError
