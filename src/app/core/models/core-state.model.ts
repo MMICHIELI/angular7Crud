@@ -1,5 +1,4 @@
-import { IProductModuleState, Product } from 'src/app/product/models';
-import { IPage } from '.';
+import { IProductModuleState } from 'src/app/product/models';
 
 /**
  * Examples of Core States

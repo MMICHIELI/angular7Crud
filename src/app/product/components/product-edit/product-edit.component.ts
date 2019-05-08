@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import {
-  FormBuilder,
-  FormGroup,
-  Validators
+    FormBuilder,
+    FormGroup,
+    Validators
 } from '@angular/forms';
 
 // @Ngrx
@@ -22,69 +22,69 @@ import { ProductGetByIDSuccess, ProductActionTypes, ProductAddSuccess } from '..
 // Action Types
 
 @Component({
-  selector: 'app-product-edit',
-  templateUrl: './product-edit.component.html',
-  styleUrls: ['./product-edit.component.scss']
+    selector: 'app-product-edit',
+    templateUrl: './product-edit.component.html',
+    styleUrls: ['./product-edit.component.scss']
 })
 export class ProductEditComponent implements OnInit {
 
-  productForm: FormGroup;
-  id: number = null;
-  prodName = '';
-  prodDesc = '';
-  prodPrice: number = null;
-  isLoadingResults = false;
+    productForm: FormGroup;
+    id: number = null;
+    prodName = '';
+    prodDesc = '';
+    prodPrice: number = null;
+    isLoadingResults = false;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
-    private store: Store<IAppState>,
-    private action$: Actions
-  ) { }
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        private formBuilder: FormBuilder,
+        private store: Store<IAppState>,
+        private action$: Actions
+    ) { }
 
-  ngOnInit() {
-    this.getProduct(this.route.snapshot.params.id);
-    this.productForm = this.formBuilder.group({
-      prodName: [null, Validators.required],
-      prodDesc: [null, Validators.required],
-      prodPrice: [null, Validators.required]
-    });
-  }
+    ngOnInit() {
+        this.getProduct(this.route.snapshot.params.id);
+        this.productForm = this.formBuilder.group({
+            prodName: [null, Validators.required],
+            prodDesc: [null, Validators.required],
+            prodPrice: [null, Validators.required]
+        });
+    }
 
-  getProduct(id: number) {
-    // Should be change and not systematically get the product from BackEND
-    this.store.dispatch(new fromStore.ProductGetByID(id));
-    this.action$
-      .pipe(ofType<ProductGetByIDSuccess>(ProductActionTypes.PRODUCT_GET_SUCCESS))
-      .subscribe(
-        data => {
-          this.id = data.payload.id;
-          this.productForm.setValue({
-            prodName: data.payload.prodName,
-            prodDesc: data.payload.prodDesc,
-            prodPrice: data.payload.prodPrice
-          });
-        }
-      );
-  }
+    getProduct(id: number) {
+        // Should be change and not systematically get the product from BackEND
+        this.store.dispatch(new fromStore.ProductGetByID(id));
+        this.action$
+            .pipe(ofType<ProductGetByIDSuccess>(ProductActionTypes.PRODUCT_GET_SUCCESS))
+            .subscribe(
+                data => {
+                    this.id = data.payload.id;
+                    this.productForm.setValue({
+                        prodName: data.payload.prodName,
+                        prodDesc: data.payload.prodDesc,
+                        prodPrice: data.payload.prodPrice
+                    });
+                }
+            );
+    }
 
-  onFormSubmit(form: Product) {
-    this.isLoadingResults = true;
-    form.id = this.id;
-    this.store.dispatch(new fromStore.ProductUpdate(form));
-    this.action$
-      .pipe(ofType<ProductAddSuccess>(ProductActionTypes.PRODUCT_ADD_SUCCESS))
-      .subscribe(
-        data => {
-          const id = data.payload.id;
-          this.isLoadingResults = false;
-          this.router.navigate(['products/product-details', id]);
-        }
-      );
-  }
+    onFormSubmit(form: Product) {
+        this.isLoadingResults = true;
+        form.id = this.id;
+        this.store.dispatch(new fromStore.ProductUpdate(form));
+        this.action$
+            .pipe(ofType<ProductAddSuccess>(ProductActionTypes.PRODUCT_ADD_SUCCESS))
+            .subscribe(
+                data => {
+                    const id = data.payload.id;
+                    this.isLoadingResults = false;
+                    this.router.navigate(['products/product-details', id]);
+                }
+            );
+    }
 
-  productDetails() {
-    this.router.navigate(['products/product-details', this.id]);
-  }
+    productDetails() {
+        this.router.navigate(['products/product-details', this.id]);
+    }
 }

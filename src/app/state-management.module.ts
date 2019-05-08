@@ -15,15 +15,19 @@ const reducers = {
 };
 const effects = [];
 
+// tslint:disable-next-line:no-any
 export function logger(reducer: ActionReducer<any>): any {
     return storeLogger()(reducer);
 }
 
+// tslint:disable-next-line:no-any
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
     return localStorageSync({ keys: ['core', 'product'], rehydrate: true })(reducer);
 }
 
-export const metaReducers = !environment.production ? [localStorageSyncReducer] : [localStorageSyncReducer, logger, storeFreeze];
+export const metaReducers = !environment.production
+    ? [localStorageSyncReducer]
+    : [localStorageSyncReducer, logger, storeFreeze];
 /**
  * Root Module for Ngrx
  */

@@ -30,14 +30,14 @@ export function ProductReducer(
     switch (action.type) {
         case ProductActionTypes.PRODUCT_LOAD_PAGE: {
             const newData: models.IProductState = {
-                pageRequest: action.payload as IPageRequest,
+                pageRequest: <IPageRequest>action.payload,
                 loading: true,
             };
             return newState(state, newData);
         }
         case ProductActionTypes.PRODUCT_LOAD_PAGE_SUCCESS: {
             const newData: models.IProductState = {
-                data: action.payload as IPage<models.Product>,
+                data: <IPage<models.Product>>action.payload,
                 loading: false,
                 success: true
             };
@@ -61,7 +61,7 @@ export function ProductReducer(
         }
         case ProductActionTypes.PRODUCT_GET_SUCCESS: {
             const newData: models.IProductState = {
-                product: action.payload as models.Product,
+                product: <models.Product>action.payload,
                 loading: false,
                 success: true
             };

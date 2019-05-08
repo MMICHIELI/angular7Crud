@@ -5,4 +5,3 @@ export * from './product.effects';
 export const effects = [
     ProductEffects
 ];
-

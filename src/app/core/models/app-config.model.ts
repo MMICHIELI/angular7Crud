@@ -1,5 +1,4 @@
 import { environment } from 'src/environments/environment';
-import { _appIdRandomProviderFactory } from '@angular/core/src/application_tokens';
 
 export interface IAppConfig {
     _apiBaseURL: string;

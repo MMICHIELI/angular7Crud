@@ -14,7 +14,6 @@ import { IPage, IPageRequest } from 'src/app/core/models/pagination.model';
 // Services
 import { ApiService } from '../../core/services/api.service';
 
-
 @Injectable({
     providedIn: 'root'
 })

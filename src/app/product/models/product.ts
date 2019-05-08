@@ -22,7 +22,6 @@ export interface IProductState {
     error?: ErrorModel;
 }
 
-
 // Module State
 export interface IProductModuleState {
     products: IProductState;

@@ -1,12 +1,11 @@
 // Ngrx
-import { createSelector, createFeatureSelector, ActionReducerMap, Action } from '@ngrx/store';
+import { createSelector, createFeatureSelector, ActionReducerMap } from '@ngrx/store';
 
 // Models
 import { IProductModuleState } from '../../models';
 
 // Reducers
 import { ProductReducer } from './product.reducer';
-import { IPage } from 'src/app/core/models';
 
 export const reducers: ActionReducerMap<IProductModuleState> = {
     products: ProductReducer
