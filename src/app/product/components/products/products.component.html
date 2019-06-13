@@ -30,3 +30,20 @@
         </table>
     </div>
 </div>
+
+<!-- Exemples pour demain -->
+<div class="example-container mat-elevation-z8">
+    <button (mouseover)="displayPanel = true" (mouseleave)="displayPanel = false">
+        Panel
+    </button>
+    <button (mouseover)="showCard = true" (mouseleave)="showCard = false">
+        Card
+    </button>
+    <div *ngIf="displayPanel">
+        <png-panel></png-panel>
+    </div>
+    <div *ngIf="showCard">
+        <png-card></png-card>
+    </div>
+    <span pTooltip="Enter your username" tooltipPosition="top">tooltipTest</span>
+</div>

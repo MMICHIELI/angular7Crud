@@ -55,11 +55,11 @@
         "indent": [
             true,
             "spaces",
-            4
+            2
         ],
         "ter-indent": [
             true,
-            4,
+            2,
             {
                 "SwitchCase": true
             }
