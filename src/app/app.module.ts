@@ -10,7 +10,6 @@ import { StateManagementModule } from './state-management.module';
 
 // Root Component
 import { AppComponent } from './app.component';
-import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -21,8 +20,7 @@ import { TooltipModule } from 'primeng/tooltip';
     BrowserAnimationsModule,
     AppRoutingModule,
     StateManagementModule,
-    CoreModule,
-    TooltipModule
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

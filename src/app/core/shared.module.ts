@@ -74,6 +74,7 @@ import { CardComponent } from './components/primeng/card/card.component';
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
+    // PrimeNG Exports cases
     TooltipModule,
     // Components
     PanelComponent,
